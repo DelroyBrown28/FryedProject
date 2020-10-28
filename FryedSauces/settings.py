@@ -1,10 +1,11 @@
 import os
 import environ
+# from decouple import config
+# from unipath import Path
+# from dj_database_url import parse as db_url
 
-import dj_database_url
 
-
-env = environ.Env()
+# env = environ.Env()
 # environ.Env.read_os.environ.get()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
