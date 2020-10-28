@@ -154,7 +154,7 @@ if DEBUG is False:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-    ALLOWED_HOSTS = ['fryed-sauces-project.herokuapp.com', 'localhost']
+    ALLOWED_HOSTS = ['fryed-sauces-project.herokuapp.com', 'localhost', '167.172.50.142']
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
     DATABASES = {
