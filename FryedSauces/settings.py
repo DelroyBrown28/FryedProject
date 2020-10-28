@@ -1,20 +1,20 @@
+
 import os
 import environ
-from decouple import config
-# from Unipath import Path
-# from dj_database_url import parse as db_url
+
+# import dj_database_url
 
 
 env = environ.Env()
-# environ.Env.read_os.environ.get()
+environ.Env.read_env()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = 'XqyUnj3kNSPiBbHpn6NGEhFPwGQ2SfTh18v7h2DLGtjLtgahMh7KDymuCXM6'
+SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = False
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['167.172.50.142']
+ALLOWED_HOSTS = []
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -36,8 +36,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 ]
 
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
-NOTIFY_EMAIL = os.environ.get('NOTIFY_EMAIL')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+NOTIFY_EMAIL = env('NOTIFY_EMAIL')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -70,38 +70,24 @@ TEMPLATES = [
 WSGI_APPLICATION = 'FryedSauces.wsgi.application'
 
 
-# if 'DATABASE_URL' in os.environ.get('SECRET_KEY'):
-#     DATABASES = {
-#         'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
-#     }
-# else:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#         }
-#     }
-
-
-if DEBUG:
+if 'DATABASE_URL' in env('SECRET_KEY'):
+    DATABASES = {
+        'default': dj_database_url.parse(env('DATABASE_URL'))
+    }
+else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'fyedproject',
-            'USER': 'delroybrown',
-            'PASSWORD': 'william17',
-            'HOST': 'localhost',
-            'PORT': '',
-        }
-    }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 # DATABASES = {
 #     'default': dj_database_url.parse('postgres://qmvriwrxtzbmvt:84361c36b8499a51a1780a52a7011a8263fee9e1361af0e56e3cfc8d24926b2f@ec2-46-137-123-136.eu-west-1.compute.amazonaws.com:5432/dd4lb2poq1fgnc')
@@ -154,8 +140,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-PAYPAL_CLIENT_ID = os.environ.get('PAYPAL_SANDBOX_CLIENT_ID')
-PAYPAL_SECRET_KEY = os.environ.get('PAYPAL_SANDBOX_SECRET_KEY')
+PAYPAL_CLIENT_ID = env('PAYPAL_SANDBOX_CLIENT_ID')
+PAYPAL_SECRET_KEY = env('PAYPAL_SANDBOX_SECRET_KEY')
 
 
 # Extra security settings
@@ -169,8 +155,7 @@ if DEBUG is False:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-    ALLOWED_HOSTS = ['fryed-sauces-project.herokuapp.com',
-                     'localhost', '167.172.50.142']
+    ALLOWED_HOSTS = ['fryed-sauces-project.herokuapp.com', 'localhost']
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
     DATABASES = {
@@ -180,9 +165,9 @@ if DEBUG is False:
             'USER': '',
             'PASSWORD': '',
             'HOST': '',
-
+            'PORT': ''
         }
     }
 
-    PAYPAL_CLIENT_ID = os.environ.get('PAYPAL_LIVE_CLIENT_ID')
-    PAYPAL_SECRET_KEY = os.environ.get('PAYPAL_LIVE_SECRET_KEY')
+    PAYPAL_CLIENT_ID = env('PAYPAL_LIVE_CLIENT_ID')
+    PAYPAL_SECRET_KEY = env('PAYPAL_LIVE_SECRET_KEY')
