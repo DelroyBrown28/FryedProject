@@ -1,7 +1,7 @@
 import os
 import environ
 from decouple import config
-from unipath import Path
+from Unipath import Path
 from dj_database_url import parse as db_url
 
 
