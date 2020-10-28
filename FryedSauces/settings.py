@@ -5,12 +5,12 @@ from decouple import config
 # from dj_database_url import parse as db_url
 
 
-# env = environ.Env()
+env = environ.Env()
 # environ.Env.read_os.environ.get()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY")
 
 DEBUG = False
 
