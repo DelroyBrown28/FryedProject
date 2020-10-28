@@ -1,8 +1,8 @@
 import os
 import environ
 from decouple import config
-from Unipath import Path
-from dj_database_url import parse as db_url
+# from Unipath import Path
+# from dj_database_url import parse as db_url
 
 
 # env = environ.Env()
