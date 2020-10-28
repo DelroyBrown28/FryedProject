@@ -13,7 +13,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['167.172.50.142']
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
