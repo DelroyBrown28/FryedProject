@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .lds-grid {
+        display: inline-block;
+        position: relative;
+        width: 80px;
+        height: 80px;
+    }
+
+    .lds-grid div {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: greenyellow;
+        animation: lds-grid 1.2s linear infinite;
+    }
+
+    .lds-grid div:nth-child(1) {
+        top: 8px;
+        left: 8px;
+        animation-delay: 0s;
+    }
+
+    .lds-grid div:nth-child(2) {
+        top: 8px;
+        left: 32px;
+        animation-delay: -0.4s;
+    }
+
+    .lds-grid div:nth-child(3) {
+        top: 8px;
+        left: 56px;
+        animation-delay: -0.8s;
+    }
+
+    .lds-grid div:nth-child(4) {
+        top: 32px;
+        left: 8px;
+        animation-delay: -0.4s;
+    }
+
+    .lds-grid div:nth-child(5) {
+        top: 32px;
+        left: 32px;
+        animation-delay: -0.8s;
+    }
+
+    .lds-grid div:nth-child(6) {
+        top: 32px;
+        left: 56px;
+        animation-delay: -1.2s;
+    }
+
+    .lds-grid div:nth-child(7) {
+        top: 56px;
+        left: 8px;
+        animation-delay: -0.8s;
+    }
+
+    .lds-grid div:nth-child(8) {
+        top: 56px;
+        left: 32px;
+        animation-delay: -1.2s;
+    }
+
+    .lds-grid div:nth-child(9) {
+        top: 56px;
+        left: 56px;
+        animation-delay: -1.6s;
+    }
+
+    @keyframes lds-grid {
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.5;
+        }
+    }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="alert alert-success" role="alert" id="alertSuccess" style="display: none;">
+                Successful Payment.
+            </div>
+            <div class="alert alert-danger" role="alert" id="alertFailure" style="display: none;">
+                Uh oh! Something went wrong. Please, try again.
+            </div>
+
+            <div class="text-center py-3">
+
+                <div id="loader" style="margin: auto; display: none;" class="lds-grid">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+
+
+            <div id="paymentInfo">
+                <p>Order total: £{{ order.get_total }}</p>
+                <h4>How would you like to pay?</h4>
+                <div id="paypal-button-container"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}">
+</script>
+<script>
+    const loader = document.getElementById('loader');
+    const paymentInfo = document.getElementById('paymentInfo');
+
+    function loaderToggle(on) {
+        loader.style.display = on === true ? "block" : "none";
+        paymentInfo.style.display = on === true ? "none" : "block";
+    }
+
+
+
+
+
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    // Sends POST request to "confirm-order" view
+    function sendOrderConfirmed(details) {
+        return fetch("{% url 'cart:confirm-order' %}", {
+            method: "post",
+            body: JSON.stringify(details),
+            headers: {
+                "content-Type": "application/json",
+                "X-CSRFToken": csrftoken
+            }
+        })
+    }
+    paypal.Buttons({
+        createOrder: function (data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '{{ order.get_total }}'
+                    }
+                }]
+            });
+        },
+        onApprove: function (data, actions) {
+            loaderToggle(true);
+            return actions.order.capture().then(function (details) {
+                    console.log(details);
+
+                    sendOrderConfirmed(details).then(res => {
+                        loaderToggle(false);
+                        const alertSuccess = document.getElementById('alertSuccess');
+                        alertSuccess.style.display = 'block';
+                        setTimeout(function () {
+                            window.location.replace("{{ CALLBACK_URL }}")
+                        }, 1000);
+                    })
+
+                }).catch(err => {
+                    const alertFailure = document.getElementById('alertFailure');
+                    alertFailure.style.display = 'block';
+                })
+                .finally(() => loaderToggle(false));
+        }
+    }).render('#paypal-button-container');
+</script>
+{% endblock scripts %}

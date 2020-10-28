@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="site-blocks-cover hero_image" style="background-image: url({% static 'images/hero.jpg' %});"
+    data-aos="fade">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 pt-5 pt-md-0">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="site-section site-section-sm site-blocks-1">
+    <div class="container">
+        <div class="row justify-content-center">
+            <a href="https://www.instagram.com/" target="_blank"
+                class="igWrap col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4" data-aos="fade-up" data-aos-delay="">
+                <div class="icon mr-4 align-self-start">
+                    <span><i style="color: #000;" class="fab fa-instagram"></i></span>
+                </div>
+                <div class="text">
+                    <h2 class="text-uppercase">Follow Fryed on Instagram</h2>
+                    <p>Follow Fryed on IG for news, updates and discounts.</p>
+                </div>
+            </a>
+            <a href="#" target="_blank"
+                class="contactWrap col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="icon mr-4 align-self-start">
+                    <span><i style="color: #000;" class="fas fa-at"></i></span>
+                </div>
+                <div class="text">
+                    <h2 class="text-uppercase">Contact Fryed Sauces</h2>
+                    <p>Mobile: +44 95844612<br>
+                        Email: FryedSauces@email.com
+                    </p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

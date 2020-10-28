@@ -1,0 +1,1 @@
+web: gunicorn FryedSauces.wsgi:application
