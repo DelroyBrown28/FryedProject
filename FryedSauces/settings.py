@@ -166,7 +166,7 @@ if DEBUG is False:
             'USER': '',
             'PASSWORD': '',
             'HOST': '',
-            'PORT': ''
+            
         }
     }
 
