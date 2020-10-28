@@ -1,8 +1,8 @@
 import os
 import environ
-# from decouple import config
-# from unipath import Path
-# from dj_database_url import parse as db_url
+from decouple import config
+from unipath import Path
+from dj_database_url import parse as db_url
 
 
 # env = environ.Env()
@@ -10,7 +10,7 @@ import environ
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = config("SECRET_KEY")
 
 DEBUG = False
 
