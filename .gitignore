@@ -60,6 +60,7 @@ celerybeat.pid
 .env
 .venv
 env/
+env.py
 venv/
 ENV/
 env.bak/
