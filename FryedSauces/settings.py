@@ -5,7 +5,7 @@ import dj_database_url
 
 
 env = environ.Env()
-environ.Env.read_env()
+environ.Env.read_os.environ.get()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -35,8 +35,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 ]
 
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
-NOTIFY_EMAIL = env('NOTIFY_EMAIL')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+NOTIFY_EMAIL = os.environ.get('NOTIFY_EMAIL')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -69,9 +69,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'FryedSauces.wsgi.application'
 
 
-# if 'DATABASE_URL' in env('SECRET_KEY'):
+# if 'DATABASE_URL' in os.environ.get('SECRET_KEY'):
 #     DATABASES = {
-#         'default': dj_database_url.parse(env('DATABASE_URL'))
+#         'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
 #     }
 # else:
 #     DATABASES = {
@@ -153,8 +153,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-PAYPAL_CLIENT_ID = env('PAYPAL_SANDBOX_CLIENT_ID')
-PAYPAL_SECRET_KEY = env('PAYPAL_SANDBOX_SECRET_KEY')
+PAYPAL_CLIENT_ID = os.environ.get('PAYPAL_SANDBOX_CLIENT_ID')
+PAYPAL_SECRET_KEY = os.environ.get('PAYPAL_SANDBOX_SECRET_KEY')
 
 
 # Extra security settings
@@ -183,5 +183,5 @@ if DEBUG is False:
         }
     }
 
-    PAYPAL_CLIENT_ID = env('PAYPAL_LIVE_CLIENT_ID')
-    PAYPAL_SECRET_KEY = env('PAYPAL_LIVE_SECRET_KEY')
+    PAYPAL_CLIENT_ID = os.environ.get('PAYPAL_LIVE_CLIENT_ID')
+    PAYPAL_SECRET_KEY = os.environ.get('PAYPAL_LIVE_SECRET_KEY')
