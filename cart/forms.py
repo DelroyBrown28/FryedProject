@@ -52,15 +52,15 @@ class AddressForm(forms.Form):
         user_id = kwargs.pop('user_id')
         super().__init__(*args, **kwargs)
 
-        user = User.objects.get(id=user_id)
+        # user = User.objects.get(id=user_id)
 
         shipping_address_queryset = Address.objects.filter(
-            user=user,
+            # user=user,
             address_type='S'
         )
 
         billing_address_queryset = Address.objects.filter(
-            user=user,
+            # user=user,
             address_type='B'
         )
 
