@@ -1,7 +1,7 @@
 import os
 import environ
 
-# import dj_database_url
+import dj_database_url
 
 
 env = environ.Env()
@@ -13,7 +13,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['167.172.50.142']
+ALLOWED_HOSTS = ['167.172.50.142', '127.0.0.1']
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
