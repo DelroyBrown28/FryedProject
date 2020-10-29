@@ -12,7 +12,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['fryed-project.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['fryed-project.herokuapp.com', '127.0.0.1', 'localhost']
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -68,9 +68,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'FryedSauces.wsgi.application'
 
 
-if 'DATABASE_URL' in env('SECRET_KEY'):
+if 'DATABASE_URL' in os.environ:
     DATABASES = {
-        'default': dj_database_url.parse(env('DATABASE_URL'))
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
     }
 else:
     DATABASES = {
