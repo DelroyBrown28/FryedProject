@@ -69,28 +69,36 @@ TEMPLATES = [
 WSGI_APPLICATION = 'FryedSauces.wsgi.application'
 
 
-if 'DATABASE_URL' in env('SECRET_KEY'):
-    DATABASES = {
-        'default': dj_database_url.parse(env('DATABASE_URL'))
-    }
-else:
+# if 'DATABASE_URL' in env('SECRET_KEY'):
+#     DATABASES = {
+#         'default': dj_database_url.parse(env('DATABASE_URL'))
+#     }
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         }
+#     }
+
+if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-# DATABASES = {
-#     'default': dj_database_url.parse('postgres://qmvriwrxtzbmvt:84361c36b8499a51a1780a52a7011a8263fee9e1361af0e56e3cfc8d24926b2f@ec2-46-137-123-136.eu-west-1.compute.amazonaws.com:5432/dd4lb2poq1fgnc')
-# }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'FryedProject',
+            'USER': 'delroy',
+            'PASSWORD': 'william17',
+            'HOST': 'localhost',
+            'PORT': '',
+        }
+    }
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -154,7 +162,8 @@ if DEBUG is False:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-    ALLOWED_HOSTS = ['fryed-sauces-project.herokuapp.com', 'localhost', '167.172.50.142']
+    ALLOWED_HOSTS = ['fryed-sauces-project.herokuapp.com',
+                     'localhost', '167.172.50.142']
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
     DATABASES = {
