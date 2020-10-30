@@ -8,9 +8,9 @@ environ.Env.read_env()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
-DEBUG = env('DEBUG')
+DEBUG = 'DEVELOPMENT' in os.environ
 
 ALLOWED_HOSTS = ['fryed-project.herokuapp.com', '127.0.0.1', 'localhost']
 
@@ -144,7 +144,7 @@ if DEBUG is False:
 
     ALLOWED_HOSTS = ['fryed-sauces-project.herokuapp.com',
                      'localhost', '167.172.50.142']
-                     
+
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
     DATABASES = {
