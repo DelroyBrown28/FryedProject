@@ -68,17 +68,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'FryedSauces.wsgi.application'
 
 
-# if 'DATABASE_URL' in os.environ:
-# DATABASES = {
-#     'default': dj_database_url.parse('postgres://jeheeyftxmtmug:62c461ba7fb127a05f211f879eba60d96a3712a90b3b8fa77b59c0d130047d69@ec2-52-31-94-195.eu-west-1.compute.amazonaws.com:5432/ddkotg3uptf06v')
-# }
-# else:
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -144,6 +144,7 @@ if DEBUG is False:
 
     ALLOWED_HOSTS = ['fryed-sauces-project.herokuapp.com',
                      'localhost', '167.172.50.142']
+                     
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
     DATABASES = {
