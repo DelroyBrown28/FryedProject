@@ -52,7 +52,7 @@ class SizeVariation(models.Model):
 class Product(models.Model):
     title = models.CharField(max_length=150)
     slug = models.SlugField(unique=True)
-    image = models.ImageField(upload_to='product_images')
+    image = models.ImageField(upload_to='productImages')
     description = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
     created = models.DateTimeField(auto_now_add=True)
