@@ -135,13 +135,12 @@ if 'USE_AWS' in os.environ:
     AWS_SECRET_ACCESS_KEY_ID = os.environ.get('AWS_SECRET_ACCESS_KEY_ID')
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 
-    # STATIC AND MEDIA FILES
-    STATICFILES_STORAGE = 'customer_storages.StaticStorage'
+    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
     STATICFILES_LOCATION = 'static'
-    DEFAULT_FILES_STORAGE = 'customer_storages.MediaStorage'
+    DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
     MEDIAFILES_LOCATION = 'media'
 
-    # OVERIDE STATIC AND MEDIA URL's IN PRODUCTION
+    # Override static and media URLs in production
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
 
@@ -162,7 +161,7 @@ if DEBUG is False:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
     ALLOWED_HOSTS = ['fryed-sauces-project.herokuapp.com',
-                     'localhost', '167.172.50.142']
+                     'localhost', '167.172.50.142', '127.0.0.1']
 
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
