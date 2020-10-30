@@ -128,6 +128,24 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
+if 'USE_AWS' in os.environ:
+    AWS_STORAGE_BUCKET_NAME = 'fryed-sauces'
+    AWS_S3_REGION_NAME = 'eu-west-2'
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY_ID = os.environ.get('AWS_SECRET_ACCESS_KEY_ID')
+    AWS_S3_CUSTOM_SOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+    # STATIC AND MEDIA FILES
+    STATICFILES_STORAGE = 'customer_storages.StaticStorage'
+    STATICFILES_LOCATION = 'static'
+    DEFAULT_FILES_STORAGE = 'customer_storages.MediaStorage'
+    MEDIAFILES_LOCATION = 'media'
+
+    # OVERIDE STATIC AND MEDIA URL's IN PRODUCTION
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
+
+
 PAYPAL_CLIENT_ID = env('PAYPAL_SANDBOX_CLIENT_ID')
 PAYPAL_SECRET_KEY = env('PAYPAL_SANDBOX_SECRET_KEY')
 

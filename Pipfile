@@ -47,6 +47,7 @@ PyJWT = "==1.7.1"
 Unipath = "==1.1"
 boto3 = "*"
 django-storages = "*"
+boto = "*"
 
 [requires]
 python_version = "3.8"
